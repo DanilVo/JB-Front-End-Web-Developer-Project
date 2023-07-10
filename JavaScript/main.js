@@ -4,20 +4,22 @@ const URL_API =
   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1";
 window.addEventListener(
   "load",
-  drawData(getFromLocalStorage(LIST_OF_COINS_LS_ID))
-);
+  getDataFromApi()
+);     
 
-// async function getDataFromApi() {
-//   try {
-//     const response = await fetch(URL_API);
-//     const data = await response.json();
-//     setToLocalStorage(data, LIST_OF_COINS_LS_ID);
-//     drawData(data);
-//   } catch (err) {
-//     drawData(getFromLocalStorage(LIST_OF_COINS_LS_ID));
-//     // console.log(err);
-//   }
-// }
+async function getDataFromApi() {
+  try {
+    const response = await fetch(URL_API);
+    const data = await response.json();
+    console.log(response);
+    setToLocalStorage(data, LIST_OF_COINS_LS_ID);
+    drawData(getFromLocalStorage(LIST_OF_COINS_LS_ID));
+    console.log('here');
+  } catch (err) {
+    drawData(getFromLocalStorage(LIST_OF_COINS_LS_ID));
+    console.log(err); 
+  }
+}
 
 function drawData(data) {
   const cards = document.querySelector(".row");
@@ -66,16 +68,26 @@ function displaySearchCoins(coins) {
   drawData(listOfCoins);
 }
 
-let favoriteCoinsArr = []
-
-const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
+let favoriteCoinsArr = [];
+const checkBoxes = document.querySelectorAll(".form-check-input");
+// console.log(checkBoxes);
 checkBoxes.forEach((key) =>
   key.addEventListener("click", function () {
     const coinsList = getFromLocalStorage(LIST_OF_COINS_LS_ID);
-    const checkedCoin = this.parentElement.parentElement.parentElement.id
-    const getCoinFromLS = coinsList.find((item)=> item.id == checkedCoin)
-    // favoriteCoinsArr.push(getCoinFromLS);
-    console.log(favoriteCoinsArr);
+    const checkedCoin = this.parentElement.parentElement.parentElement.id;
+    const getCoinFromLS = coinsList.find((item) => item.id == checkedCoin);
     console.log(this.checked);
+    if (this.checked) {
+      favoriteCoinsArr.push(getCoinFromLS);
+      setToLocalStorage(favoriteCoinsArr, SELECTED_COINS_LS_ID);
+    } else {
+      const indexOfRemovedCoin = favoriteCoinsArr.findIndex(
+        (item) => item.id == checkedCoin
+      );
+      favoriteCoinsArr.splice(indexOfRemovedCoin, 1);
+      setToLocalStorage(favoriteCoinsArr, SELECTED_COINS_LS_ID);
+    }
+    // console.log(getCoinFromLS);
+    // console.log(favoriteCoinsArr);
   })
 );
