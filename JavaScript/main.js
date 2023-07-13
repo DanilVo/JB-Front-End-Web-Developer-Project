@@ -26,7 +26,9 @@ function drawData(data) {
         <h5 class="card-header">${data[i].symbol.toUpperCase()}</h5>
         <div class="card-body">
           <div class="form-check-reverse form-switch">
-            <input class="form-check-input ${data[i].symbol}" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <input class="form-check-input ${
+              data[i].symbol
+            } user-selected" type="checkbox" role="switch" id="flexSwitchCheckDefault">
           </div>
             <h5 class="card-title">${data[i].name}</h5>
             <p class="card-text"></p>
@@ -43,25 +45,27 @@ function drawData(data) {
   const checkBoxes = document.querySelectorAll("#flexSwitchCheckDefault");
   const favoriteCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
   if (favoriteCoins) {
-    checkBoxes.forEach(box=>{      
-      const iterator = favoriteCoins.values()
+    checkBoxes.forEach((box) => {
+      const iterator = favoriteCoins.values();
       for (const value of iterator) {
         if (box.classList.contains(value.symbol)) {
-          box.setAttribute("checked", "checked");
+          box.checked = true;
+          box.classList.remove('user-selected')
         }
       }
-    })
+    });
   }
 
   checkBoxes.forEach((key) =>
     key.addEventListener("click", function () {
       const coinsList = getFromLocalStorage(LIST_OF_COINS_LS_ID);
-      const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID) || []
+      const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID) || [];
       const checkedCoin = this.parentElement.parentElement.parentElement.id;
-      const findCoinFromLS = coinsList.find((item) => item.id == checkedCoin);
       if (this.checked) {
-        setToLocalStorage([...userCoins,findCoinFromLS], SELECTED_COINS_LS_ID);
-        countFavoriteCoins();
+        this.classList.remove("user-selected");
+        const findCoinFromLS = coinsList.find((item) => item.id == checkedCoin);
+        setToLocalStorage([...userCoins, findCoinFromLS], SELECTED_COINS_LS_ID);
+        countUserCoins();
       } else {
         const indexOfRemovedCoin = userCoins.findIndex(
           (item) => item.id == checkedCoin
@@ -94,19 +98,34 @@ function displaySearchCoins(coins) {
   drawData(listOfCoins);
 }
 
-function countFavoriteCoins() {
-  const checkBoxes = document.querySelectorAll("#flexSwitchCheckDefault");
-  const favoriteCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
-  checkBoxes.forEach(box=>{
-    box.addEventListener('input',function(){
-      
-      if (favoriteCoins.length > 5) {
-        console.log(favoriteCoins.length);
-        box.setAttribute("data-bs-toggle", "modal");
-        box.setAttribute("data-bs-target", "#exampleModal");
-        this.checked = false
+function countUserCoins() {
+  let checkBoxes = document.querySelectorAll(".user-selected");
+  console.log(checkBoxes.length);
+  const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
+  checkBoxes.forEach((box) => {
+    box.addEventListener("input", function () {
+      if (userCoins.length === 5) {
+        checkBoxes.forEach((item) => {
+          item.setAttribute("data-bs-toggle", "modal");
+          item.setAttribute("data-bs-target", "#exampleModal");
+        });
       }
+      if (userCoins.length > 0 && userCoins.length < 5) {
+        checkBoxes.forEach((item) => {
+          this.disabled = false;
+          item.removeAttribute("data-bs-toggle", "modal");
+          item.removeAttribute("data-bs-target", "#exampleModal");
+        });
+      }
+      // if (userCoins.length < 5) {
+      // }
 
-    })
-  })
+      if (userCoins.length === 6) {
+        // this.checked = false
+        // this.disabled = true;
+        userCoins.splice(userCoins.length - 1, 1);
+        setToLocalStorage(userCoins, SELECTED_COINS_LS_ID);
+      }
+    });
+  });
 }
