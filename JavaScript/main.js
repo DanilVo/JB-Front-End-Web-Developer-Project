@@ -15,6 +15,35 @@ async function getDataFromApi() {
     console.log(err);
   }
 }
+function onToggleChange(element) {
+  //add element as argument to follow input
+  const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
+  const userCheckBoxes = document.querySelectorAll(".user-selected");
+  console.log(userCoins.length);
+  // console.log(element);
+  if (userCoins.length === 5) {
+    userCheckBoxes.forEach((item) => {
+      item.setAttribute("data-bs-toggle", "modal");
+      item.setAttribute("data-bs-target", "#exampleModal");
+    });
+  } else if (userCoins.length === 4) {
+    userCheckBoxes.forEach((item) => {
+      if (item.hasAttribute("data-bs-toggle")) {
+        console.log(userCoins.length);
+        // item.checked = false; // not suppose to be here
+        item.removeAttribute("data-bs-toggle");
+        item.removeAttribute("data-bs-target");
+      }
+    });
+  }
+  if (userCoins.length >5) {
+    console.log();
+    element.checked = false;
+    // this.disabled = true;
+    userCoins.splice(userCoins.length - 1, 1);
+    setToLocalStorage(userCoins, SELECTED_COINS_LS_ID);
+  }
+}
 
 function drawData(data) {
   const cards = document.querySelector(".row");
@@ -28,10 +57,12 @@ function drawData(data) {
           <div class="form-check-reverse form-switch">
             <input class="form-check-input ${
               data[i].symbol
-            } user-selected" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            } user-selected" type="checkbox" role="switch" id="flexSwitchCheckDefault" oninput=onToggleChange(this)>
           </div>
             <h5 class="card-title">${data[i].name}</h5>
-            <p class="card-text"><img src="${data[i].image}" style="width: 35px"></p>
+            <p class="card-text"><img src="${
+              data[i].image
+            }" style="width: 35px"></p>
             <a href="javascript:void(0)" class="btn btn-primary">Show Info</a>
         </div>
       </div>
@@ -50,7 +81,6 @@ function drawData(data) {
       for (const value of iterator) {
         if (box.classList.contains(value.symbol)) {
           box.checked = true;
-          box.classList.remove('user-selected')
         }
       }
     });
@@ -65,7 +95,7 @@ function drawData(data) {
         this.classList.remove("user-selected");
         const findCoinFromLS = coinsList.find((item) => item.id == checkedCoin);
         setToLocalStorage([...userCoins, findCoinFromLS], SELECTED_COINS_LS_ID);
-        countUserCoins();
+        // countUserCoins();
       } else {
         const indexOfRemovedCoin = userCoins.findIndex(
           (item) => item.id == checkedCoin
@@ -104,7 +134,7 @@ function countUserCoins() {
   const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
   checkBoxes.forEach((box) => {
     box.addEventListener("input", function () {
-      const userCheckBoxes = document.querySelectorAll('.user-selected')
+      const userCheckBoxes = document.querySelectorAll(".user-selected");
       if (userCoins.length === 5) {
         userCheckBoxes.forEach((item) => {
           item.setAttribute("data-bs-toggle", "modal");
@@ -120,7 +150,7 @@ function countUserCoins() {
         });
       }
       if (userCoins.length === 6) {
-        this.checked = false
+        this.checked = false;
         // this.disabled = true;
         userCoins.splice(userCoins.length - 1, 1);
         setToLocalStorage(userCoins, SELECTED_COINS_LS_ID);
