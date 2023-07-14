@@ -31,7 +31,7 @@ function drawData(data) {
             } user-selected" type="checkbox" role="switch" id="flexSwitchCheckDefault">
           </div>
             <h5 class="card-title">${data[i].name}</h5>
-            <p class="card-text"></p>
+            <p class="card-text"><img src="${data[i].image}" style="width: 35px"></p>
             <a href="javascript:void(0)" class="btn btn-primary">Show Info</a>
         </div>
       </div>
@@ -99,29 +99,28 @@ function displaySearchCoins(coins) {
 }
 
 function countUserCoins() {
-  let checkBoxes = document.querySelectorAll(".user-selected");
-  console.log(checkBoxes.length);
+  const checkBoxes = document.querySelectorAll("#flexSwitchCheckDefault");
+  // console.log(checkBoxes.length);
   const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
   checkBoxes.forEach((box) => {
     box.addEventListener("input", function () {
+      const userCheckBoxes = document.querySelectorAll('.user-selected')
       if (userCoins.length === 5) {
-        checkBoxes.forEach((item) => {
+        userCheckBoxes.forEach((item) => {
           item.setAttribute("data-bs-toggle", "modal");
           item.setAttribute("data-bs-target", "#exampleModal");
         });
       }
-      if (userCoins.length > 0 && userCoins.length < 5) {
-        checkBoxes.forEach((item) => {
+      if (userCoins.length === 4) {
+        userCheckBoxes.forEach((item) => {
+          console.log(userCoins.length);
           this.disabled = false;
-          item.removeAttribute("data-bs-toggle", "modal");
-          item.removeAttribute("data-bs-target", "#exampleModal");
+          item.removeAttribute("data-bs-toggle");
+          item.removeAttribute("data-bs-target");
         });
       }
-      // if (userCoins.length < 5) {
-      // }
-
       if (userCoins.length === 6) {
-        // this.checked = false
+        this.checked = false
         // this.disabled = true;
         userCoins.splice(userCoins.length - 1, 1);
         setToLocalStorage(userCoins, SELECTED_COINS_LS_ID);
