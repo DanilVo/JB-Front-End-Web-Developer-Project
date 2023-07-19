@@ -1,17 +1,15 @@
-const LIST_OF_COINS_LS_ID = "coin";
-const SELECTED_COINS_LS_ID = "userCoins";
-const PRICE_OF_COINS = "coinsPrices";
+const LIST_OF_COINS_LS_ID = 'coin';
+const SELECTED_COINS_LS_ID = 'userCoins';
+const PRICE_OF_COINS = 'coinsPrices';
 const URL_API =
-  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1";
-
+  'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1';
 document
-  .getElementById("home-page")
+  .getElementById('home-page')
   .addEventListener(
-    "click",
-    getDataFromApi
+    'click',
+    drawData(getFromLocalStorage(LIST_OF_COINS_LS_ID))
   );
-
-window.addEventListener("load", getDataFromApi());
+window.addEventListener('load', getDataFromApi());
 
 async function getDataFromApi() {
   try {
@@ -26,27 +24,27 @@ async function getDataFromApi() {
       cards.innerHTML =
         '<h1 style="background-color: yellow">some thing went wrong</h1>';
     }
-    console.log(err);
+    console.log(`${err}, please try again later.`);
   }
 }
 
 function onToggleChange(element) {
   //add element as argument to follow input
   const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
-  const userCheckBoxes = document.querySelectorAll(".user-selected");
+  const userCheckBoxes = document.querySelectorAll('.user-selected');
   console.log(userCoins.length);
   if (userCoins.length === 5) {
     userCheckBoxes.forEach((item) => {
-      item.setAttribute("data-bs-toggle", "modal");
-      item.setAttribute("data-bs-target", "#exampleModal");
+      item.setAttribute('data-bs-toggle', 'modal');
+      item.setAttribute('data-bs-target', '#exampleModal');
     });
   } else if (userCoins.length <= 4) {
     userCheckBoxes.forEach((item) => {
-      if (item.hasAttribute("data-bs-toggle")) {
+      if (item.hasAttribute('data-bs-toggle')) {
         console.log(userCoins.length);
         // item.checked = false; // not suppose to be here
-        item.removeAttribute("data-bs-toggle");
-        item.removeAttribute("data-bs-target");
+        item.removeAttribute('data-bs-toggle');
+        item.removeAttribute('data-bs-target');
       }
     });
   }
@@ -58,9 +56,13 @@ function onToggleChange(element) {
   }
 }
 
+function unchoseCoin() {
+  
+}
+
 function drawData(data) {
-  const cards = document.querySelector(".row");
-  let html = "";
+  const cards = document.querySelector('.row');
+  let html = '';
   for (let i = 0; i < data.length; i++) {
     html += `
     <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
@@ -91,11 +93,11 @@ function drawData(data) {
       </div>`;
   }
   if (data.length === 0) {
-    cards.innerHTML = "Please enter valid name of coin";
+    cards.innerHTML = 'Please enter valid name of coin';
   } else {
     cards.innerHTML = html;
   }
-  const checkBoxes = document.querySelectorAll("#flexSwitchCheckDefault");
+  const checkBoxes = document.querySelectorAll('#flexSwitchCheckDefault');
   const favoriteCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
   if (favoriteCoins) {
     checkBoxes.forEach((box) => {
@@ -109,16 +111,16 @@ function drawData(data) {
   }
 
   checkBoxes.forEach((key) =>
-    key.addEventListener("click", function () {
+    key.addEventListener('click', function () {
       const coinsList = getFromLocalStorage(LIST_OF_COINS_LS_ID);
       const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID) || [];
       const checkedCoin = this.parentElement.parentElement.parentElement.id;
       if (this.checked) {
-        this.classList.remove("user-selected");
+        this.classList.remove('user-selected');
         const findCoinFromLS = coinsList.find((item) => item.id == checkedCoin);
         setToLocalStorage([...userCoins, findCoinFromLS], SELECTED_COINS_LS_ID);
       } else {
-        this.classList.add("user-selected");
+        this.classList.add('user-selected');
         const indexOfRemovedCoin = userCoins.findIndex(
           (item) => item.id == checkedCoin
         );
@@ -128,80 +130,60 @@ function drawData(data) {
     })
   );
 }
-// move api request to outer function
 
-async function getCoinsPriceAndSetToLS() {
-  //getCoinsPriceAndSetToLS
-  try {
-    const response = await fetch(`https://api.coingecko.com/api/v3/coins/`);
-    const data = await response.json();
-    // let priceObj = [];
-    // for (const coin of data) {
-    //   priceObj.push({
-    //     name: coin.name,
-    //     usd: coin.market_data.current_price.usd,
-    //     euro: coin.market_data.current_price.eur,
-    //     ils: coin.market_data.current_price.ils,
-    //   });
-    // }
-    // console.log(priceObj);
-    // setToLocalStorage(priceObj, PRICE_OF_COINS);
-    return data;
-    // showCurrencyPrice(priceObj, id);
-    // spinner.setAttribute("hidden", "");
-  } catch (error) {
-    console.log(error);
-  }
-}
-
- async function getCurrencyPrice(obj, id) {
-  if (getFromLocalStorage(PRICE_OF_COINS)) {
+async function getCurrencyPrice(obj, id) {
+  const spinner = document.querySelector(`#spinner${id}`);
+  const coinPrice = getFromSessionStorage(PRICE_OF_COINS) || [];
+  const coinId = obj.parentElement.parentElement.id;
+  console.log(coinId);
+  if (coinPrice.find((coin) => coin.name.toLowerCase() === coinId)) {
+    showCurrencyPrice(
+      coinPrice.find((coin) => coin.name.toLowerCase() === coinId),
+      id
+    );
   } else {
-
-    const data = await getCoinsPriceAndSetToLS()
-    console.log(data);
+    if (document.querySelector('a[aria-expanded="false"]')) {
+      spinner.removeAttribute('hidden');
+    }
+    try {
+      const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${coinId}`
+      );
+      const data = await response.json();
+      let priceObj = {
+        name: data.id,
+        usd: data.market_data.current_price.usd,
+        euro: data.market_data.current_price.eur,
+        ils: data.market_data.current_price.ils,
+      };
+      console.log(priceObj);
+      if (!coinPrice.some((coin) => coin.name === priceObj.name)) {
+        setToSessionStorage([...coinPrice, priceObj], PRICE_OF_COINS);
+      }
+      showCurrencyPrice(priceObj, id);
+      spinner.setAttribute('hidden', '');
+    } catch (err) {
+      console.log(err);
+    }
   }
-  // const spinner = document.querySelector(`#spinner${id}`);
-  // if (getFromLocalStorage(PRICE_OF_COINS)) {
-  //   showCurrencyPrice(getFromLocalStorage(PRICE_OF_COINS));
-  // } else {
-  //   spinner.removeAttribute("hidden");
-    // try {
-    //   const response = await fetch(`https://api.coingecko.com/api/v3/coins/`);
-    //   const data = await response.json();
-    //   let priceObj = [];
-    //   for (const coin of data) {
-    //     priceObj.push({
-    //       name: coin.name,
-    //       usd: coin.market_data.current_price.usd,
-    //       euro: coin.market_data.current_price.eur,
-    //       ils: coin.market_data.current_price.ils,
-    //     });
-    //   }
-    //   // console.log(priceObj);
-    //   setToLocalStorage(priceObj, PRICE_OF_COINS);
-    //   console.log(priceObj);
-    //   // showCurrencyPrice(priceObj, id);
-    //   spinner.setAttribute("hidden", "");
-    // } catch (error) {
-    //   console.log(error);
-    // }
-//   }
 }
 
-// function showCurrencyPrice(data, id) {
-//   const coin = document.querySelector(`.price-info${id}`);
-//   console.log(data);
-//   const html = `
-//   $: ${data.usd}
-//   <br>
-//   €: ${data.euro}
-//   <br>
-//   ₪: ${data.ils}
-//   `;
-//   coin.innerHTML = html;
-// }
+function showCurrencyPrice(priceObj, id) {
+  const coin = document.querySelector(`.price-info${id}`);
+  // add here (if) and check for session storage or else remove
+  const html = `
+  $: ${priceObj.usd}
+  <br>
+  €: ${priceObj.euro}
+  <br>
+  ₪: ${priceObj.ils}
+  `;
+  coin.innerHTML = html;
+}
 
+setInterval(() => sessionStorage.clear(PRICE_OF_COINS), 120000);
+
+// Storage functions
 function setToLocalStorage(data, id) {
   localStorage.removeItem(id);
   localStorage.setItem(id, JSON.stringify(data));
@@ -212,8 +194,18 @@ function getFromLocalStorage(id) {
   return JSON.parse(coins);
 }
 
-const input = document.querySelector(".form-control");
-input.addEventListener("input", () =>
+function setToSessionStorage(data, id) {
+  sessionStorage.removeItem(id);
+  sessionStorage.setItem(id, JSON.stringify(data));
+}
+
+function getFromSessionStorage(id) {
+  const coins = sessionStorage.getItem(id);
+  return JSON.parse(coins);
+}
+
+const input = document.querySelector('.form-control');
+input.addEventListener('input', () =>
   displaySearchCoins(input.value.toLowerCase())
 );
 
