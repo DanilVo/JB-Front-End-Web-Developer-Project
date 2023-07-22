@@ -138,10 +138,10 @@ function drawData(data) {
     cards.innerHTML = htmlTemplate(data);
   }
   const checkBoxes = document.querySelectorAll('#flexSwitchCheckDefault');
-  const favoriteCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
-  if (favoriteCoins) {
+  const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
+  if (userCoins) {
     checkBoxes.forEach((box) => {
-      const iterator = favoriteCoins.values();
+      const iterator = userCoins.values();
       for (const value of iterator) {
         if (box.classList.contains(value.symbol)) {
           box.checked = true;
@@ -186,6 +186,7 @@ function triggerModalOnFiveItems() {
   }
 }
 
+// Price information of coin
 async function getCurrencyPrice(obj, id) {
   const spinner = document.querySelector(`#spinner${id}`);
   const coinPrice = getFromSessionStorage(PRICE_OF_COINS) || [];
@@ -272,6 +273,7 @@ input.addEventListener('input', () =>
   displaySearchCoins(input.value.toLowerCase())
 );
 
+// Input filter function
 function displaySearchCoins(coins) {
   const coinsList = getFromLocalStorage(LIST_OF_COINS_LS_ID);
   const listOfCoins = coinsList.filter((coin) => {
