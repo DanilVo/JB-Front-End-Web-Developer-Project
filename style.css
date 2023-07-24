@@ -9,3 +9,31 @@ body {
 nav {
   border-radius: 5px;
 }
+
+.colBase {
+  border: 3px solid #71C9CE;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-shadow: 5px 5px 15px #71C9CE;
+}
+
+.aboutCard {
+  margin-bottom: 40px;
+  row-gap: 20px;
+  column-gap: 50px;
+  font-size: x-large;
+  font-weight: bolder;
+  flex-basis: auto;
+}
+
+.aboutCard:nth-child(odd) {
+  background-color: red;
+}
+
+.colBase:nth-child(even) {
+  background-color: green;
+  /* transform: translateX(800px); */
+}
