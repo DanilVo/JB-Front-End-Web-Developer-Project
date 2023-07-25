@@ -10,38 +10,149 @@ nav {
   border-radius: 5px;
 }
 
-.card {
-  box-shadow: 5px 5px 5px #71C9CE;
-}
-
-/* .colBase {
-  border: 3px solid #71C9CE;
+.colBase {
+  border: 3px solid #71c9ce;
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  box-shadow: 5px 5px 15px #71C9CE;
+  box-shadow: 5px 5px 15px #71c9ce;
 }
 
-.aboutCard {
-  margin-bottom: 40px;
-  row-gap: 20px;
-  column-gap: 50px;
-  font-size: x-large;
-  font-weight: bolder;
-  flex-basis: auto;
-  margin-bottom: 150px;
-}
-
-.title {
-  background-color: red;
+.title
+{
   position: relative;
-  left: -1000px;
+  right: 1000px;
+  font-weight: 700;
 }
 
-.context {
-  background-color: green;
+.context
+{
   position: relative;
-  right: -1000px;
-} */
+  left: 1000px;
+}
+
+.about-me {
+  border-radius: 20px;
+  border: 3px solid #71c9ce;
+  box-shadow: 5px 5px 5px #71c9ce;
+  margin: 0px 80px 50px;
+}
+
+/* CONTACT ME NAV LINKS START*/
+nav {
+  z-index: 1;
+  position: fixed;
+  top: 25%;
+  left: 0;
+  background-color: rgba(2, 5, 4, 0.5);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  left: -40px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.show-up {
+  position: absolute;
+  left: -110px;
+  transition: left 0.5s;
+  clip-path: polygon(
+    15% 20%,
+    100% 20%,
+    100% 80%,
+    15% 80%,
+    15% 65%,
+    0 50%,
+    15% 35%
+  );
+  color: white;
+}
+
+a:hover > .show-up {
+  left: 60px;
+  text-align: center;
+}
+
+.linkedin {
+  background-color: #3350e0;
+  width: 70px;
+  padding-left: 10px;
+}
+
+.github {
+  background-color: #9c7a5b;
+  width: 60px;
+  padding-left: 8px;
+}
+
+.email {
+  background-color: #fc5a5a;
+  width: 50px;
+  padding-left: 7px;
+}
+
+li > a {
+  display: block;
+  position: relative;
+  text-align: center;
+  line-height: 50px;
+  height: 50px;
+  width: 50px;
+}
+
+nav > ul > li:nth-of-type(1):hover {
+  background-color: #3350e0;
+  border-top-right-radius: 5px;
+}
+
+nav > ul > li:nth-of-type(2):hover {
+  background-color: #9c7a5b;
+}
+
+nav > ul > li:nth-of-type(3):hover {
+  background-color: #fc5a5a;
+  border-bottom-right-radius: 5px;
+}
+/* CONTACT ME NAV LINKS END*/
+
+/*RESPONSIVENESS BY SCREEN SIZE FOR ABOUT ME PAGE*/
+@media screen and (min-width: 821px) {
+  .about-me {
+    margin: 0px 80px 50px;
+    font-weight: 700;
+    font-size: 24px;
+  }
+
+  .aboutCard {
+    margin-bottom: 40px;
+    row-gap: 20px;
+    column-gap: 50px;
+    font-size: x-large;
+    flex-basis: auto;
+    margin-bottom: 150px;
+  }
+}
+
+@media screen and (max-width: 821px) {
+  .about-me {
+    margin: 0px 60px 50px;
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .aboutCard {
+    margin-bottom: 40px;
+    row-gap: 20px;
+    column-gap: 50px;
+    font-size: large;
+    font-weight: 500;
+    flex-basis: auto;
+    margin-bottom: 150px;
+  }
+}
