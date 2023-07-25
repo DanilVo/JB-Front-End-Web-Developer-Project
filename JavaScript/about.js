@@ -1,4 +1,4 @@
-$(() => {
+$(function() {
   $("#about").click(addAboutDesc);
   function addAboutDesc() {
     const row = $(".row");
