@@ -10,7 +10,11 @@ nav {
   border-radius: 5px;
 }
 
-.colBase {
+.card {
+  box-shadow: 5px 5px 5px #71C9CE;
+}
+
+/* .colBase {
   border: 3px solid #71C9CE;
   border-radius: 20px;
   display: flex;
@@ -27,13 +31,17 @@ nav {
   font-size: x-large;
   font-weight: bolder;
   flex-basis: auto;
+  margin-bottom: 150px;
 }
 
-.aboutCard:nth-child(odd) {
+.title {
   background-color: red;
+  position: relative;
+  left: -1000px;
 }
 
-.colBase:nth-child(even) {
+.context {
   background-color: green;
-  /* transform: translateX(800px); */
-}
+  position: relative;
+  right: -1000px;
+} */

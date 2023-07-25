@@ -102,22 +102,22 @@ function htmlTemplate(data) {
     html += `
     <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3" id="responsiveLayout">
       <div class="card" id="${data[i].id}">
-        <h5 class="card-header">${data[i].symbol.toUpperCase()}</h5>
-        <div class="card-body">
+        <h5 class="card-header">${data[i].symbol.toUpperCase()} <img src="${
+          data[i].image
+        }" style="width: 35px"></h5>
+        <div class="card-body ">
           <div class="form-check-reverse form-switch">
             <input class="form-check-input ${
               data[i].symbol
             } user-selected" type="checkbox" role="switch" id="flexSwitchCheckDefault" oninput=onToggleChange(this)>
           </div>
-            <h5 class="card-title">${data[i].name}</h5>
-            <p class="card-text"><img src="${
-              data[i].image
-            }" style="width: 35px"></p>
-            <a class="btn btn-primary " data-bs-toggle="collapse" href="#collapseExample${i}"
-             role="button" aria-expanded="false" aria-controls="collapseExample"
-              onclick="getCurrencyPrice(this,${i})">Show Info
-                <div class="spinner-border ms-auto" id="spinner${i}" role="status" aria-hidden="true" hidden></div>              
-            </a>
+            <h6 class="card-title text-wrap">${data[i].name}</h6>
+            <p class="card-text"></p>
+              <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample${i}"
+               role="button" aria-expanded="false" aria-controls="collapseExample"
+                onclick="getCurrencyPrice(this,${i})">Show Info
+                  <div class="spinner-border ms-auto" id="spinner${i}" role="status" aria-hidden="true" hidden></div>              
+              </a>
               <div class="collapse" id="collapseExample${i}">
                 <div class="card card-body price-info${i}">
                   
