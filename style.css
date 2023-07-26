@@ -6,8 +6,12 @@ body {
   background-size: cover;
 }
 
-nav {
-  border-radius: 5px;
+.navbar {
+  box-shadow: 5px 5px 15px #71c9ce;
+}
+
+.card-body {
+  box-shadow: 1px 4px 15px #71c9ce;
 }
 
 .colBase {

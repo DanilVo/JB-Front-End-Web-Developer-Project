@@ -115,27 +115,27 @@ $(function() {
   }
 
   $(window).scroll(function () {
-    if ($(window).scrollTop() >= 200) {
+    if ($(window).scrollTop() >= 300) {
       $(".title-2").animate({ right: "0" }, 1000);
       $(".context-2").animate({ left: "0" }, 1000);
     }
-    if ($(window).scrollTop() >= 600) {
+    if ($(window).scrollTop() >= 700) {
       $(".title-3").animate({ right: "0" }, 1000);
       $(".context-3").animate({ left: "0" }, 1000);
     }
-    if ($(window).scrollTop() >= 1000) {
+    if ($(window).scrollTop() >= 1100) {
       $(".title-4").animate({ right: "0" }, 1000);
       $(".context-4").animate({ left: "0" }, 1000);
     }
-    if ($(window).scrollTop() >= 1400) {
+    if ($(window).scrollTop() >= 1500) {
       $(".title-5").animate({ right: "0" }, 1000);
       $(".context-5").animate({ left: "0" }, 1000);
     }
-    if ($(window).scrollTop() >= 2100) {
+    if ($(window).scrollTop() >= 2200) {
       $(".title-6").animate({ right: "0" }, 1000);
       $(".context-6").animate({ left: "0" }, 1000);
     }
-    if ($(window).scrollTop() >= 2200) {
+    if ($(window).scrollTop() >= 2500) {
       $(".title-7").animate({ right: "0" }, 1000);
       $(".context-7").animate({ left: "0" }, 1000);
     }

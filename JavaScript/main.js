@@ -7,7 +7,6 @@ const URL_API =
 document.getElementById('home-page').addEventListener('click', getDataFromApi);
 
 window.addEventListener('load', getDataFromApi);
-
 async function getDataFromApi() {
   try {
     const response = await fetch(URL_API);
