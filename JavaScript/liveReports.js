@@ -34,6 +34,11 @@ async function liveReportsPage() {
     yaxis: { range: [0, 100000], title: "Price" },
     title: "coins price",
   });
+
+  setInterval(function(){
+  
+    Plotly.extendTraces("chart",{y:[[Math.random]]},[0])
+  },200)
 }
 
 
