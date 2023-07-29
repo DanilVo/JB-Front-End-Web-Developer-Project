@@ -1,10 +1,15 @@
-const liveReports = document.querySelector("#live-reports");
-liveReports.addEventListener("click", liveReportsPage);
+import Plotly from 'plotly.js-dist-min'
+
+const liveReports = document.querySelector('#live-reports');
+liveReports.addEventListener('click', liveReportsPage);
 
 async function getCoinsPrice(coin) {
+  const loadingSpinner = document.getElementById('graphLoading');
+  loadingSpinner.classList.replace('d-none', 'd-flex');
   const data = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}`);
   const response = await data.json();
   try {
+    loadingSpinner.classList.replace('d-flex', 'd-none');
     return response;
   } catch (err) {
     console.log(err);
@@ -25,23 +30,21 @@ async function createArrayOfCoins() {
   return arr;
 }
 async function liveReportsPage() {
-  const container = document.querySelector(".row");
+  const container = document.querySelector('.row');
   container.innerHTML =
     '<div class="align-middle"><div id="chart" style="width: max-content;height: 500px;"></div></div>';
   const coinsData = await createArrayOfCoins();
-  Plotly.newPlot("chart", coinsData, {
-    xaxis: { range: [0, 100], title: "Updates every 5 seconds" },
-    yaxis: { range: [0, 100000], title: "Price" },
-    title: "coins price",
+  Plotly.newPlot('chart', coinsData, {
+    xaxis: { range: [0, 100], title: 'Updates every 5 seconds' },
+    yaxis: { range: [0, 100000], title: 'Price' },
+    title: 'coins price',
   });
 
-  setInterval(function(){
+  // setInterval(function(){
   
-    Plotly.extendTraces("chart",{y:[[Math.random]]},[0])
-  },200)
+    // Plotly.extendTraces("chart",{y:[[Math.random]]},[0])
+  // },200)
 }
-
-
 
 // console.log(createArrayOfCoins());
 
@@ -54,6 +57,6 @@ async function liveReportsPage() {
 // }
 
 function getFromLocalStorageGraph() {
-  const coins = localStorage.getItem("userCoins");
+  const coins = localStorage.getItem('userCoins');
   return JSON.parse(coins);
 }

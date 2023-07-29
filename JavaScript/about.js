@@ -3,7 +3,7 @@ $(function() {
   function addAboutDesc() {
     const row = $(".row");
     row.html(`
-        <div class="container text-center">
+      <div class="container text-center">
         <nav>
             <ul>
               <li>
@@ -30,7 +30,7 @@ $(function() {
             </ul>
           </nav>
         <h1>About me:</h1>
-            <p class="about-me p-5">
+            <p class="about-me p-3">
               Hello, my name is Danil Volobuyev, and I am a passionate beginner
               front-end developer. I currently have experience with HTML, CSS, and
               JavaScript, and I'm always eager to learn more. I love the creativity
@@ -48,7 +48,7 @@ $(function() {
             </p>
         <h1>About project:</h1>
             <div class="row aboutCard">
-                <div class="title-1 colBase col-sm-12 col-md-12 col-lg-4 ">Welcome to BitBlaze - Your Gateway to Real-Time Cryptocurrency Insights!</div>
+                <div class="title-1 colBase col-sm-12 col-md-12 col-lg-4" style="font-weight: 700">Welcome to BitBlaze - Your Gateway to Real-Time Cryptocurrency Insights!</div>
                 <div class="context-1 colBase col-sm-12 col-md-12 col-lg-7 ">Welcome to BitBlaze, your ultimate destination for real-time cryptocurrency insights! Our cutting-edge web application is designed to provide you with an immersive and user-friendly experience, empowering you with the latest data on your favorite digital assets.</div>
             </div>
             <div class="row aboutCard">

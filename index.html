@@ -26,6 +26,7 @@
       crossorigin="anonymous"
     ></script>
     <script defer src="JavaScript/plotly-2.24.1.min.js" charset="utf-8"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js" charset="utf-8"></script>
   </head>
   <body>
     <nav
@@ -76,6 +77,10 @@
       </div>
     </nav>
     <div class="container overflow-x-hidden">
+      <div class="d-none align-items-center p-5" id="graphLoading">
+        <strong role="status">Data Is Loading...</strong>
+        <div class="spinner-border ms-auto" aria-hidden="true"></div>
+      </div>
       <div class="row my-5"></div>
     </div>
     <!-- Modal -->
