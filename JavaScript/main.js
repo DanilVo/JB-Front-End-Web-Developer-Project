@@ -20,7 +20,7 @@ async function getDataFromApi() {
       cards.innerHTML =
         '<h1 style="background-color: yellow">Some thing went wrong:(</h1>';
     }
-    console.log(`${err}, please try again later.`);
+    console.error(`${err}, please try again later.`);
   }
 }
 
@@ -117,7 +117,7 @@ function htmlTemplate(data) {
                 onclick="getCurrencyPrice(this,${i})">Show Info
                   <div class="spinner-border ms-auto" id="spinner${i}" role="status" aria-hidden="true" hidden></div>              
               </a>
-              <div class="collapse" id="collapseExample${i}">
+              <div class="collapse pt-2" id="collapseExample${i}">
                 <div class="card card-body price-info${i}">
                   
                 </div>
@@ -229,7 +229,7 @@ async function getCurrencyPrice(obj, id) {
       showCurrencyPrice(priceObj, id);
       spinner.setAttribute('hidden', '');
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 }
