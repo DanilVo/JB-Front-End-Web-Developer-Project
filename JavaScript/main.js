@@ -5,6 +5,8 @@ const URL_API =
   'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1';
 
 document.getElementById('home-page').addEventListener('click', getDataFromApi);
+document.querySelector('.navbar-brand').addEventListener('click', getDataFromApi);
+document.querySelector('.nav-image').addEventListener('click', getDataFromApi);
 
 window.addEventListener('load', getDataFromApi);
 async function getDataFromApi() {
@@ -102,8 +104,8 @@ function htmlTemplate(data) {
     <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3" id="responsiveLayout">
       <div class="card" id="${data[i].id}">
         <h5 class="card-header">${data[i].symbol.toUpperCase()} <img src="${
-          data[i].image
-        }" style="width: 35px"></h5>
+      data[i].image
+    }" style="width: 35px"></h5>
         <div class="card-body ">
           <div class="form-check-reverse form-switch">
             <input class="form-check-input ${
@@ -131,6 +133,10 @@ function htmlTemplate(data) {
 
 function drawData(data) {
   const cards = document.querySelector('.row');
+  const explainImg = document.querySelector('.img-fluid');
+  if (explainImg.classList.contains('d-flex')) {
+    explainImg.classList.replace('d-flex', 'd-none');
+  }
   if (data.length === 0) {
     cards.innerHTML = 'Please enter valid name of coin';
   } else {

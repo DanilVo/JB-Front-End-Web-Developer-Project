@@ -136,7 +136,7 @@ nav > ul > li:nth-of-type(3):hover {
     column-gap: 50px;
     font-size: x-large;
     flex-basis: auto;
-    margin-bottom: 150px;
+    margin-bottom: 80px;
   }
 }
 
@@ -153,6 +153,6 @@ nav > ul > li:nth-of-type(3):hover {
     font-size: large;
     font-weight: 500;
     flex-basis: auto;
-    margin-bottom: 150px;
+    margin-bottom: 80px;
   }
 }

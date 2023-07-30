@@ -1,7 +1,10 @@
-$(function() {
-  $("#about").click(addAboutDesc);
+$(function () {
+  $('#about').click(addAboutDesc);
   function addAboutDesc() {
-    const row = $(".row");
+    if ($('.img-fluid').hasClass('d-flex')) {
+      $('.img-fluid').removeClass('d-flex').addClass('d-none');
+    }
+    const row = $('.row');
     row.html(`
       <div class="container text-center">
         <nav>
@@ -116,28 +119,28 @@ $(function() {
 
   $(window).scroll(function () {
     if ($(window).scrollTop() >= 300) {
-      $(".title-2").animate({ right: "0" }, 1000);
-      $(".context-2").animate({ left: "0" }, 1000);
+      $('.title-2').animate({ right: '0' }, 1000);
+      $('.context-2').animate({ left: '0' }, 1000);
     }
     if ($(window).scrollTop() >= 700) {
-      $(".title-3").animate({ right: "0" }, 1000);
-      $(".context-3").animate({ left: "0" }, 1000);
+      $('.title-3').animate({ right: '0' }, 1000);
+      $('.context-3').animate({ left: '0' }, 1000);
     }
     if ($(window).scrollTop() >= 1100) {
-      $(".title-4").animate({ right: "0" }, 1000);
-      $(".context-4").animate({ left: "0" }, 1000);
+      $('.title-4').animate({ right: '0' }, 1000);
+      $('.context-4').animate({ left: '0' }, 1000);
     }
     if ($(window).scrollTop() >= 1500) {
-      $(".title-5").animate({ right: "0" }, 1000);
-      $(".context-5").animate({ left: "0" }, 1000);
+      $('.title-5').animate({ right: '0' }, 1000);
+      $('.context-5').animate({ left: '0' }, 1000);
     }
-    if ($(window).scrollTop() >= 2200) {
-      $(".title-6").animate({ right: "0" }, 1000);
-      $(".context-6").animate({ left: "0" }, 1000);
+    if ($(window).scrollTop() >= 1800) {
+      $('.title-6').animate({ right: '0' }, 1000);
+      $('.context-6').animate({ left: '0' }, 1000);
     }
-    if ($(window).scrollTop() >= 2500) {
-      $(".title-7").animate({ right: "0" }, 1000);
-      $(".context-7").animate({ left: "0" }, 1000);
+    if ($(window).scrollTop() >= 2100) {
+      $('.title-7').animate({ right: '0' }, 1000);
+      $('.context-7').animate({ left: '0' }, 1000);
     }
   });
 });

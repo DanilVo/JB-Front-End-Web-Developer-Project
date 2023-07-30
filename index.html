@@ -3,13 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Full Stack Web Developer</title>
+    <title>BlueWaveCrypto, Follow Crypto World!</title>
+    <link
+      rel="shortcut icon"
+      href="Assets/Images/bluewavecrypto-icon.png"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="style.css" />
     <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-    crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
     />
     <script src="JavaScript/code.jquery.com_jquery-3.7.0.min.js"></script>
     <script
@@ -25,16 +30,18 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
-    <script defer src="JavaScript/plotly-2.24.1.min.js" charset="utf-8"></script>
-    <!-- <script src="https://cdn.plot.ly/plotly-2.24.1.min.js" charset="utf-8"></script> -->
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
   </head>
   <body>
-    <nav
-      class="navbar navbar-expand-lg bg-body-tertiary position-static"
-    >
+    <nav class="navbar navbar-expand-lg bg-body-tertiary position-static">
       <div class="container-fluid">
-        <h1 class="navbar-brand">BitBlaze</h1>
+        <img
+        class="nav-image"
+          src="Assets/Images/bluewavecrypto-icon.png"
+          alt="BlueWaveCrypto"
+          style="width: 50px; padding-bottom: 10px;"
+        />
+        <h1 class="navbar-brand" style="cursor: pointer">BlueWaveCrypto</h1>
         <button
           class="navbar-toggler"
           type="button"
@@ -81,6 +88,13 @@
       <div class="d-none align-items-center p-5" id="graphLoading">
         <strong role="status">Data Is Loading...</strong>
         <div class="spinner-border ms-auto" aria-hidden="true"></div>
+      </div>
+      <div class="container">
+        <img
+          class="img-fluid d-none p-3"
+          src="Assets/Images/chart-explanation.png"
+          alt="chart-explanation"
+        />
       </div>
       <div class="row my-5"></div>
     </div>
