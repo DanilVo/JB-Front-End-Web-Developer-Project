@@ -11,7 +11,10 @@ async function liveReportsPage() {
   container.innerHTML =
     '<div id="chartContainer" style="height: 300px; width: 100%;"></div>';
   await createArrayOfCoins();
-  console.log(arr.forEach(item=> console.log(item)));
+  const arrayOfCoins = getFromLocalStorageGraph();
+  let fixedArr = arr.filter((o1) =>
+    arrayOfCoins.some((o2) => o1.name === o2.id)
+  );
   chart = new CanvasJS.Chart('chartContainer', {
     zoomEnabled: true,
     title: {
@@ -33,7 +36,7 @@ async function liveReportsPage() {
       fontColor: 'dimGrey',
       itemclick: toggleDataSeries,
     },
-    data: arr,
+    data: fixedArr,
   });
   chart.render();
   function toggleDataSeries(e) {
@@ -49,10 +52,10 @@ async function liveReportsPage() {
 
 async function getCoinsPrice(coin) {
   const loadingSpinner = document.getElementById('graphLoading');
+  if (!arr.length) {
+    loadingSpinner.classList.replace('d-none', 'd-flex');
+  }
   try {
-    if (!arr.length) {
-      loadingSpinner.classList.replace('d-none', 'd-flex');
-    }
     const data = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}`);
     const response = await data.json();
     loadingSpinner.classList.replace('d-flex', 'd-none');

@@ -1,9 +1,15 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url(Assets/Fonts/Poppins-Regular.ttf);
+}
+
 body {
   background-image: url(Assets/Images/background.jpg);
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  font-family: 'Poppins' !important;
 }
 
 .navbar {
@@ -82,19 +88,19 @@ a:hover > .show-up {
 
 .linkedin {
   background-color: #3350e0;
-  width: 70px;
+  width: 80px;
   padding-left: 10px;
 }
 
 .github {
   background-color: #9c7a5b;
-  width: 60px;
+  width: 70px;
   padding-left: 8px;
 }
 
 .email {
   background-color: #fc5a5a;
-  width: 50px;
+  width: 60px;
   padding-left: 7px;
 }
 
@@ -155,4 +161,50 @@ nav > ul > li:nth-of-type(3):hover {
     flex-basis: auto;
     margin-bottom: 80px;
   }
+}
+
+body.dark h1,
+body.dark .support a {
+  color: #fff;
+}
+
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-label {
+  background-color: #5c5656;
+  width: 50px;
+  height: 26px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fa-moon {
+  color: #f1c40f;
+}
+
+.fa-sun {
+  color: #f39c12;
+}
+
+.checkbox-label .ball {
+  background-color: #fff;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(24px);
 }

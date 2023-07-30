@@ -33,13 +33,16 @@
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary position-static">
+    <nav
+      class="navbar navbar-expand-lg bg-body-tertiary position-static"
+      data-bs-theme="light"
+    >
       <div class="container-fluid">
         <img
-        class="nav-image"
+          class="nav-image"
           src="Assets/Images/bluewavecrypto-icon.png"
           alt="BlueWaveCrypto"
-          style="width: 50px; padding-bottom: 10px;"
+          style="width: 50px; padding-bottom: 5px; cursor: pointer"
         />
         <h1 class="navbar-brand" style="cursor: pointer">BlueWaveCrypto</h1>
         <button
@@ -57,7 +60,7 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <button
-                class="nav-link active"
+                class="nav-link"
                 aria-current="page"
                 id="home-page"
               >
@@ -73,6 +76,14 @@
               </button>
             </li>
           </ul>
+          <div class="p-1">
+            <input type="checkbox" class="checkbox" id="checkbox" />
+            <label for="checkbox" class="checkbox-label">
+              <i class="fas fa-moon"></i>
+              <i class="fas fa-sun"></i>
+              <span class="ball"></span>
+            </label>
+          </div>
           <form class="d-flex" role="search">
             <input
               class="form-control me-2"
@@ -94,6 +105,7 @@
           class="img-fluid d-none p-3"
           src="Assets/Images/chart-explanation.png"
           alt="chart-explanation"
+          style="box-shadow: 5px 5px 15px #71c9ce; border-radius: 25px"
         />
       </div>
       <div class="row my-5"></div>

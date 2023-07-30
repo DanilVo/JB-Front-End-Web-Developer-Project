@@ -5,7 +5,9 @@ const URL_API =
   'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1';
 
 document.getElementById('home-page').addEventListener('click', getDataFromApi);
-document.querySelector('.navbar-brand').addEventListener('click', getDataFromApi);
+document
+  .querySelector('.navbar-brand')
+  .addEventListener('click', getDataFromApi);
 document.querySelector('.nav-image').addEventListener('click', getDataFromApi);
 
 window.addEventListener('load', getDataFromApi);
@@ -29,7 +31,7 @@ async function getDataFromApi() {
 function onToggleChange(element) {
   const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID);
   const coinsList = getFromLocalStorage(LIST_OF_COINS_LS_ID);
-  const userCheckBoxes = document.querySelectorAll('.user-selected');
+  const userCheckBoxes = document.querySelectorAll('.not-user-selected');
   if (userCoins.length === 5) {
     userCheckBoxes.forEach((item) => {
       item.setAttribute('data-bs-toggle', 'modal');
@@ -84,13 +86,13 @@ function replaceCoin(item, element) {
   userCoins.splice(indexOfRemovedCoin, 1, element);
   const coinThatReplaced = document.querySelector(`.${findCoinFromLS.symbol}`);
   coinThatReplaced.checked = false;
-  coinThatReplaced.classList.add('user-selected');
+  coinThatReplaced.classList.add('not-user-selected');
   coinThatReplaced.setAttribute('data-bs-target', '#exampleModal');
   coinThatReplaced.setAttribute('data-bs-toggle', 'modal');
 
   const coinToReplace = document.querySelector(`.${element.symbol}`);
   coinToReplace.checked = true;
-  coinToReplace.classList.remove('user-selected');
+  coinToReplace.classList.remove('not-user-selected');
   coinToReplace.removeAttribute('data-bs-target');
   coinToReplace.removeAttribute('data-bs-toggle');
 
@@ -101,7 +103,7 @@ function htmlTemplate(data) {
   let html = '';
   for (let i = 0; i < data.length; i++) {
     html += `
-    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3" id="responsiveLayout">
+    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3" id="responsiveLayout" data-bs-theme="light">
       <div class="card" id="${data[i].id}">
         <h5 class="card-header">${data[i].symbol.toUpperCase()} <img src="${
       data[i].image
@@ -110,7 +112,7 @@ function htmlTemplate(data) {
           <div class="form-check-reverse form-switch">
             <input class="form-check-input ${
               data[i].symbol
-            } user-selected" type="checkbox" role="switch" id="flexSwitchCheckDefault" oninput=onToggleChange(this)>
+            } not-user-selected" type="checkbox" role="switch" id="flexSwitchCheckDefault" oninput=onToggleChange(this)>
           </div>
             <h6 class="card-title text-wrap">${data[i].name}</h6>
             <p class="card-text"></p>
@@ -120,9 +122,7 @@ function htmlTemplate(data) {
                   <div class="spinner-border ms-auto" id="spinner${i}" role="status" aria-hidden="true" hidden></div>              
               </a>
               <div class="collapse pt-2" id="collapseExample${i}">
-                <div class="card card-body price-info${i}">
-                  
-                </div>
+                <div class="card card-body price-info${i}"></div>
               </div>
             </div>
         </div>
@@ -150,7 +150,7 @@ function drawData(data) {
       for (const value of iterator) {
         if (box.classList.contains(value.symbol)) {
           box.checked = true;
-          box.classList.remove('user-selected');
+          box.classList.remove('not-user-selected');
         }
       }
     });
@@ -164,12 +164,12 @@ function drawData(data) {
       const checkedCoin = this.parentElement.parentElement.parentElement.id;
       if (this.checked) {
         if (userCoins.length < 5) {
-          this.classList.remove('user-selected');
+          this.classList.remove('not-user-selected');
         }
         const findCoinFromLS = coinsList.find((item) => item.id == checkedCoin);
         setToLocalStorage([...userCoins, findCoinFromLS], SELECTED_COINS_LS_ID);
       } else {
-        this.classList.add('user-selected');
+        this.classList.add('not-user-selected');
         const indexOfRemovedCoin = userCoins.findIndex(
           (item) => item.id === checkedCoin
         );
@@ -182,13 +182,17 @@ function drawData(data) {
 
 function triggerModalOnFiveItems() {
   const userCoins = getFromLocalStorage(SELECTED_COINS_LS_ID) || [];
-  const userCheckBoxes = document.querySelectorAll('.user-selected');
+  const userCheckBoxes = document.querySelectorAll('.not-user-selected');
   if (userCoins.length === 5) {
     userCheckBoxes.forEach((item) => {
       item.setAttribute('data-bs-toggle', 'modal');
       item.setAttribute('data-bs-target', '#exampleModal');
     });
   }
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 // Price information of coin
@@ -218,9 +222,9 @@ async function getCurrencyPrice(obj, id) {
       const data = await response.json();
       const priceObj = {
         name: data.id,
-        usd: data.market_data.current_price.usd,
-        euro: data.market_data.current_price.eur,
-        ils: data.market_data.current_price.ils,
+        usd: numberWithCommas(data.market_data.current_price.usd.toFixed(2)),
+        euro: numberWithCommas(data.market_data.current_price.eur.toFixed(2)),
+        ils: numberWithCommas(data.market_data.current_price.ils.toFixed(2)),
         timeAssigned: new Date().getTime(),
       };
       if (!coinPrice.some((coin) => coin.name === priceObj.name)) {
@@ -288,4 +292,43 @@ function displaySearchCoins(coins) {
     );
   });
   drawData(listOfCoins);
+}
+
+document.querySelector('#checkbox').addEventListener('click', darkLightTheme);
+
+function darkLightTheme() {
+  const navBar = document.querySelector('.navbar');
+  const cards = document.querySelectorAll('#responsiveLayout');
+  const body = document.querySelector('body');
+
+  if (navBar.getAttribute('data-bs-theme') === 'light') {
+    navBar.setAttribute('data-bs-theme', 'dark');
+    navBar.style.boxShadow = '5px 5px 15px #0d1717';
+    cards.forEach((card) => card.setAttribute('data-bs-theme', 'dark'));
+    document
+      .querySelectorAll('.card-body')
+      .forEach((card) => (card.style.boxShadow = '5px 5px 15px #0d1717'));
+    body.style.backgroundImage = 'url(Assets/Images/background-dark.png)';
+    document.querySelectorAll('.colBase').forEach((card) => {
+      card.style.boxShadow = '5px 5px 15px #0d1717';
+      card.style.border = '3px solid #0d1717';
+    });
+    document.querySelector('.about-me').style.boxShadow = '5px 5px 5px #0d1717';
+    document.querySelector('.about-me').style.border = '3px solid #0d1717';
+  } else {
+    navBar.setAttribute('data-bs-theme', 'light');
+    navBar.style.boxShadow = '5px 5px 15px #71c9ce';
+    cards.forEach((card) => card.setAttribute('data-bs-theme', 'light'));
+    document
+      .querySelectorAll('.card-body')
+      .forEach((card) => (card.style.boxShadow = '5px 5px 15px #71c9ce'));
+    body.style.backgroundImage = 'url(Assets/Images/background.jpg)';
+
+    document.querySelectorAll('.colBase').forEach((card) => {
+      card.style.boxShadow = '5px 5px 15px #71c9ce';
+      card.style.border = '3px solid #71c9ce';
+    });
+    document.querySelector('.about-me').style.boxShadow = '5px 5px 5px #71c9ce';
+    document.querySelector('.about-me').style.border = '3px solid #71c9ce';
+  }
 }

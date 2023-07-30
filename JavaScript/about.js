@@ -32,22 +32,10 @@ $(function () {
               </li>
             </ul>
           </nav>
-        <h1>About me:</h1>
+        <h1>Few words from the developer:</h1>
             <p class="about-me p-3">
-              Hello, my name is Danil Volobuyev, and I am a passionate beginner
-              front-end developer. I currently have experience with HTML, CSS, and
-              JavaScript, and I'm always eager to learn more. I love the creativity
-              and problem-solving that comes with designing and developing
-              beautiful, user-friendly websites. <br />
-              In my free time, I enjoy practicing my coding skills by working on
-              personal projects and exploring new technologies. I am committed to
-              staying up-to-date with the latest developments in the field and
-              constantly pushing myself to improve. <br />
-              I believe that great design and functionality can have a profound
-              impact on the user experience, and I am dedicated to creating websites
-              that are both visually appealing and intuitive to use. I am excited to
-              continue growing as a front-end developer and contributing to the
-              exciting and constantly evolving world of web development.
+              
+BlueWaveCrypto is a passion project born out of my love for cryptocurrencies and desire to create a platform that caters to both seasoned traders and newcomers alike. With a diverse range of cryptocurrencies to explore, real-time price tracking, and interactive graphs, it empowers users to make informed decisions in the fast-paced crypto market. Join us on this exciting journey as we ride the waves of digital assets together!
             </p>
         <h1>About project:</h1>
             <div class="row aboutCard">
