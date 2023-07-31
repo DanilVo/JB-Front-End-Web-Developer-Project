@@ -3,7 +3,7 @@ $(function () {
   $("#about").click(darkLightThemeAbout);
   $("#checkbox").click(darkLightThemeAbout);
   function addAboutDesc() {
-    $(".form-control").val('')
+    $(".form-control").val("");
     if ($(".img-fluid").hasClass("d-flex")) {
       $(".img-fluid").removeClass("d-flex").addClass("d-none");
     }
@@ -37,8 +37,11 @@ $(function () {
           </nav>
         <h1>Few words from the developer:</h1>
             <p class="about-me p-3">
-              
-BlueWaveCrypto is a passion project born out of my love for cryptocurrencies and desire to create a platform that caters to both seasoned traders and newcomers alike. With a diverse range of cryptocurrencies to explore, real-time price tracking, and interactive graphs, it empowers users to make informed decisions in the fast-paced crypto market. Join us on this exciting journey as we ride the waves of digital assets together!
+              BlueWaveCrypto is a passion project born out of my love for cryptocurrencies and desire to create a platform that caters to both seasoned traders and newcomers alike.
+              With a diverse range of cryptocurrencies to explore, real-time price tracking, and interactive graphs, it empowers users to make informed decisions in the fast-paced crypto market.
+              Join us on this exciting journey as we ride the waves of digital assets together!
+              <br>
+              <a href="https://danilvo.github.io/Resume-Website-Volobuyev/" target="”_blank”">Visit developers resume web page!</a>
             </p>
         <h1>About project:</h1>
             <div class="row aboutCard">
