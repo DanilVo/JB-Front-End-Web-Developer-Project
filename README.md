@@ -41,4 +41,3 @@ We believe that collaboration is key to building the best platform for cryptocur
 
 BlueWaveCrypto is licensed under the [MIT License](https://github.com/danilvo/JB-Full-Stack-Web-Developer-Project/blob/main/LICENSE). You are free to use, modify, and distribute the code as per the terms of the license.
 
-Enjoy your crypto journey with BlueWaveCrypto! For any inquiries or feedback, reach out to our team at support@bluewavecrypto.com.
