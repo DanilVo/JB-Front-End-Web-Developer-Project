@@ -162,7 +162,7 @@ nav > ul > li:nth-of-type(3):hover {
     margin-bottom: 80px;
   }
 }
-
+/* dar light theme toggle */
 body.dark h1,
 body.dark .support a {
   color: #fff;
@@ -174,7 +174,7 @@ body.dark .support a {
 }
 
 .checkbox-label {
-  background-color: #5c5656;
+  background-color: #9AC5F4;
   width: 50px;
   height: 26px;
   border-radius: 50px;

@@ -1,13 +1,12 @@
-// import Plotly from "plotly.js-dist-min";
-
-const liveReports = document.querySelector('#live-reports');
-liveReports.addEventListener('click', liveReportsPage);
+const liveReports = document.querySelector("#live-reports");
+liveReports.addEventListener("click", liveReportsPage);
 
 let chart;
 const arr = [];
 
 async function liveReportsPage() {
-  const container = document.querySelector('.row');
+  document.querySelector(".form-control").value = "";
+  const container = document.querySelector(".row");
   container.innerHTML =
     '<div id="chartContainer" style="height: 300px; width: 100%;"></div>';
   await createArrayOfCoins();
@@ -15,32 +14,32 @@ async function liveReportsPage() {
   let fixedArr = arr.filter((o1) =>
     arrayOfCoins.some((o2) => o1.name === o2.id)
   );
-  chart = new CanvasJS.Chart('chartContainer', {
+  chart = new CanvasJS.Chart("chartContainer", {
     zoomEnabled: true,
     title: {
-      text: 'Price change of coins',
+      text: "Price change of coins",
     },
     axisX: {
-      title: 'chart updates every 5 secs',
+      title: "chart updates every 5 secs",
     },
     axisY: {
-      prefix: '$',
+      prefix: "$",
     },
     toolTip: {
       shared: true,
     },
     legend: {
-      cursor: 'pointer',
-      verticalAlign: 'top',
+      cursor: "pointer",
+      verticalAlign: "top",
       fontSize: 22,
-      fontColor: 'dimGrey',
+      fontColor: "dimGrey",
       itemclick: toggleDataSeries,
     },
     data: fixedArr,
   });
   chart.render();
   function toggleDataSeries(e) {
-    if (typeof e.dataSeries.visible === 'undefined' || e.dataSeries.visible) {
+    if (typeof e.dataSeries.visible === "undefined" || e.dataSeries.visible) {
       e.dataSeries.visible = false;
     } else {
       e.dataSeries.visible = true;
@@ -51,14 +50,14 @@ async function liveReportsPage() {
 }
 
 async function getCoinsPrice(coin) {
-  const loadingSpinner = document.getElementById('graphLoading');
+  const loadingSpinner = document.getElementById("graphLoading");
   if (!arr.length) {
-    loadingSpinner.classList.replace('d-none', 'd-flex');
+    loadingSpinner.classList.replace("d-none", "d-flex");
   }
   try {
     const data = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}`);
     const response = await data.json();
-    loadingSpinner.classList.replace('d-flex', 'd-none');
+    loadingSpinner.classList.replace("d-flex", "d-none");
     return response;
   } catch (err) {
     console.error(err);
@@ -68,15 +67,15 @@ async function getCoinsPrice(coin) {
 async function createArrayOfCoins() {
   const coins = getFromLocalStorageGraph();
   const now = Date.now();
-  if (coins.length > 0) {
+  if (coins && coins.length) {
     for (const coin of coins) {
       try {
         const coinPrice = await getCoinsPrice(coin.id);
         const index = arr.findIndex((object) => object.name === coinPrice.id);
         if (index === -1) {
           arr.push({
-            type: 'line',
-            xValueType: 'dateTime',
+            type: "line",
+            xValueType: "dateTime",
             showInLegend: true,
             name: coinPrice.id,
             dataPoints: [
@@ -89,7 +88,7 @@ async function createArrayOfCoins() {
       }
     }
   } else {
-    document.querySelector('.img-fluid').classList.replace('d-none', 'd-flex');
+    document.querySelector(".img-fluid").classList.replace("d-none", "d-flex");
   }
 }
 
@@ -106,6 +105,6 @@ function updateData() {
 }
 
 function getFromLocalStorageGraph() {
-  const coins = localStorage.getItem('userCoins');
+  const coins = localStorage.getItem("userCoins");
   return JSON.parse(coins);
 }
