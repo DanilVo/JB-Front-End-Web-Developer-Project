@@ -11,9 +11,7 @@ async function liveReportsPage() {
     '<div id="chartContainer" style="height: 300px; width: 100%;"></div>';
   await createArrayOfCoins();
   const arrayOfCoins = getFromLocalStorageGraph();
-  let fixedArr = arr.filter((o1) =>
-    arrayOfCoins.some((o2) => o1.name === o2.id)
-  );
+  const removedDuplicatesArr = arr.filter(coin => arrayOfCoins.some(penny => coin.name === penny.symbol))
   chart = new CanvasJS.Chart("chartContainer", {
     zoomEnabled: true,
     title: {
@@ -35,7 +33,7 @@ async function liveReportsPage() {
       fontColor: "dimGrey",
       itemclick: toggleDataSeries,
     },
-    data: fixedArr,
+    data: removedDuplicatesArr,
   });
   chart.render();
   function toggleDataSeries(e) {
@@ -49,16 +47,21 @@ async function liveReportsPage() {
   setInterval(updateData, 5000);
 }
 
-async function getCoinsPrice(coin) {
+async function getCoinsPrice() {
   const loadingSpinner = document.getElementById("graphLoading");
+  const coins = getFromLocalStorageGraph()
+  let coinsUrlTemplate = ``
+  for (const coin of coins) {
+    coinsUrlTemplate += `${coin.symbol},`
+  }
   if (!arr.length) {
     loadingSpinner.classList.replace("d-none", "d-flex");
   }
   try {
-    const data = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}`);
-    const response = await data.json();
+    const data2 = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${coinsUrlTemplate}&tsyms=USD`);
+    const response2 = await data2.json();
     loadingSpinner.classList.replace("d-flex", "d-none");
-    return response;
+    return response2;
   } catch (err) {
     console.error(err);
   }
@@ -68,39 +71,36 @@ async function createArrayOfCoins() {
   const coins = getFromLocalStorageGraph();
   const now = Date.now();
   if (coins && coins.length) {
-    for (const coin of coins) {
-      try {
-        const coinPrice = await getCoinsPrice(coin.id);
-        const index = arr.findIndex((object) => object.name === coinPrice.id);
+    try {
+      const coinPrice = await getCoinsPrice();
+      for (const key in coinPrice) {
+        const index = arr.findIndex((object) => object.name === key.toLocaleLowerCase());
         if (index === -1) {
           arr.push({
             type: "line",
             xValueType: "dateTime",
             showInLegend: true,
-            name: coinPrice.id,
+            name: key.toLocaleLowerCase(),
             dataPoints: [
-              { x: now, y: coinPrice.market_data.current_price.usd },
+              { x: now, y: coinPrice[key].USD },
             ],
           });
         }
-      } catch (err) {
-        console.error(err);
       }
+    } catch (err) {
+      console.error(err);
     }
   } else {
     document.querySelector(".img-fluid").classList.replace("d-none", "d-flex");
   }
 }
 
-function updateData() {
+async function updateData() {
   const now = Date.now();
-  arr.forEach(async (dataCoin) => {
-    let coin = await getCoinsPrice(dataCoin.name);
-    dataCoin.dataPoints.push({
-      x: now,
-      y: coin.market_data.current_price.usd,
-    });
-  });
+  let coin = await getCoinsPrice();
+  for (let i = 0; i < arr.length; i++) {
+    arr[i].dataPoints.push({ x: now, y: Object.values(coin)[i].USD });
+  }
   chart.render();
 }
 
