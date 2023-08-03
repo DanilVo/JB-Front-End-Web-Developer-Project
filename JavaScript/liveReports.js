@@ -12,6 +12,9 @@ async function liveReportsPage() {
   await createArrayOfCoins();
   const arrayOfCoins = getFromLocalStorageGraph();
   const removedDuplicatesArr = arr.filter(coin => arrayOfCoins.some(penny => coin.name === penny.symbol))
+  // console.log(arr);
+  // console.log(arrayOfCoins);
+  // console.log(removedDuplicatesArr);
   chart = new CanvasJS.Chart("chartContainer", {
     zoomEnabled: true,
     title: {
@@ -98,7 +101,10 @@ async function createArrayOfCoins() {
 async function updateData() {
   const now = Date.now();
   let coin = await getCoinsPrice();
-  for (let i = 0; i < arr.length; i++) {
+  const arrayOfCoins = getFromLocalStorageGraph();
+  // const removedDuplicatesArr = arr.filter(coin => arrayOfCoins.some(penny => coin.name === penny.symbol))
+  console.log(arrayOfCoins);
+  for (let i = 0; i < arrayOfCoins.length; i++) {
     arr[i].dataPoints.push({ x: now, y: Object.values(coin)[i].USD });
   }
   chart.render();
